@@ -24,6 +24,7 @@ var config = {
     devServer: {
         historyApiFallback: true,
         inline: true
+        //port: 8081
     }
 };
 
