@@ -56,15 +56,91 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var title = 'My React App';
-
-	var App = function App() {
-		return _react2.default.createElement(
-			'div',
-			null,
-			'My React App'
-		);
+	//USE () == AUTO RETURN
+	var Header = function Header(props) {
+	    return _react2.default.createElement(
+	        'header',
+	        null,
+	        _react2.default.createElement(
+	            'h1',
+	            null,
+	            props.title
+	        )
+	    );
 	};
+
+	var Content = function Content(props) {
+	    return _react2.default.createElement(
+	        'section',
+	        null,
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            props.description
+	        ),
+	        _react2.default.createElement(Items, { items: props.items }),
+	        _react2.default.createElement(SearchForm, null)
+	    );
+	};
+
+	var SearchForm = function SearchForm() {
+	    return _react2.default.createElement(
+	        'form',
+	        null,
+	        _react2.default.createElement('input', { type: 'text' }),
+	        _react2.default.createElement(
+	            'button',
+	            { type: 'submit' },
+	            'search'
+	        )
+	    );
+	};
+
+	var Items = function Items(props) {
+	    console.log(props.items);
+	    return _react2.default.createElement(
+	        'ul',
+	        null,
+	        props.items.map(function (item) {
+	            return _react2.default.createElement(
+	                'li',
+	                null,
+	                item
+	            );
+	        })
+	    )
+	    //        <ul>   
+	    //            <li>Item 1</li>
+	    //            <li>Item 2</li>
+	    //        </ul>
+	    ;
+	};
+
+	//USE {} == MANUAL RETURN
+	var App = function App() {
+	    var appTitle = 'Title';
+	    var desc = 'Description';
+	    var items = ["John", "Bob", "Steve"];
+
+	    return _react2.default.createElement(
+	        'section',
+	        { className: 'css', id: 'someThing' },
+	        _react2.default.createElement(Header, { title: appTitle }),
+	        _react2.default.createElement(Content, { description: desc, items: items })
+	    );
+	};
+
+	var AppWithoutDescription = function AppWithoutDescription() {
+	    return _react2.default.createElement(Header, { title: 'No description here' });
+	};
+
+	//const App = () => {
+	//	return (
+	//        <header>
+	//            <div>My React App</div>
+	//        </header>
+	//    )
+	//}
 
 	var element = document.getElementById('app');
 	_reactDom2.default.render(_react2.default.createElement(App, null), element);
