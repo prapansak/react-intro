@@ -1,74 +1,42 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import axios from 'axios'
+import { SearchForm } from './searchForm'
 
-//USE () == AUTO RETURN
-const Header = (props) => (
-        <header>
-            <h1>{props.title}</h1>
-        </header>
+const MovieList = (props) => (
+    <ul>
+    {props.movies.map((movie, i) => {
+        return (
+            <li key={i}>{movie.Title}</li>
+        )
+    })}
+    </ul>
 )
 
-const Content = (props) => (
-    <section>
-        <p>{props.description}</p>
-        <Items items={props.items}/>
-        <SearchForm />
-    </section>
-)
-
-const SearchForm = () =>{
-    return (
-        <form>
-            <input type="text" />
-            <button type="submit">search</button>
-        </form>
-    )
-}
-
-const Items = (props) =>{
-    console.log(props.items);
-    return(
-        <ul>
-            {props.items.map(
-                item => (<li>{item}</li>)
-            )}
-        </ul>    
-//        <ul>   
-//            <li>Item 1</li>
-//            <li>Item 2</li>
-//        </ul>
-    )   
-}
-
-//USE {} == MANUAL RETURN
-const App = () => {
-        const appTitle = 'Title'
-        const desc = 'Description'
-        const items = [
-            "John",
-            "Bob",
-            "Steve"
-        ]
-
-        return(
-            <section className="css" id="someThing">
-                <Header title = {appTitle}/>
-                <Content description = {desc} items = {items}/>
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            movies: []
+        }
+    }
+    onSearch(query) {
+        axios.get(`http://www.omdbapi.com/?s=${query}&plot=short&r=json`).then(response => {
+            const movies = response.data.Search
+            this.setState({
+                    movies: movies
+            })
+        })
+    }
+    render(){
+        return (
+            <section>
+                <h1>Movie Collection</h1>
+                <SearchForm onSearchSubmit={this.onSearch.bind(this)} />
+                <MovieList movies={this.state.movies} />
             </section>
-        )   
+        )
+    } 
 }
 
-const AppWithoutDescription = () => (
-    <Header title="No description here" />
-)
-
-//const App = () => {
-//	return (
-//        <header>
-//            <div>My React App</div>
-//        </header>
-//    )
-//}
-
-const element = document.getElementById('app')
-ReactDOM.render(<App/>,element)
+ReactDOM.render(<App />, document.getElementById('app'))
