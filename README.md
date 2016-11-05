@@ -9,6 +9,9 @@
 - babel-preset-react
 - css-loader
 - style-loader
+- extract-text-webpack-plugin
+- sass-loader
+- node-sass
 
 ## DEPENDENCIES
 - react

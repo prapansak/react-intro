@@ -1,0 +1,8 @@
+body {
+  color: red; }
+  body ul.list li {
+    color: green; }
+    body ul.list li a {
+      font-weight: bold; }
+    body ul.list li a.thin {
+      font-weight: normal; }
